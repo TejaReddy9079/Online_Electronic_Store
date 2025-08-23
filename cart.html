@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE+edge">
+    <meta name="viewerport" content="width=device-width,initial-scale=1.0">
+
+    <title>VTY Electronics</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!--header-->
+    <section id="header">
+        <a  href="#"><img src="https://res.cloudinary.com/dmrzseo7n/image/upload/v1728746287/pixelcut-export_9_puz3uk.png" style="height:5vh;width:8vw;" class="logo" alt="" /></a>
+            <div >
+             <ul id="navbar">
+                <li><a href="index.html">Home </a></li>
+                <li><a href="shop.html"  >Shop</a></li>
+                <li><a  href="about.html"  >About</a></li>
+                <li><a href="contact.html" >Contact</a></li>
+                <li id="lg-bag"><a class="nav-link active" href="cart.html" ><i class="fas fa-shopping-bag" ></i></a></li>
+             </ul>
+            </div >
+    </section>
+   <!--hero-->
+   <section id="page-header" class="cart-header">
+    <h2>#Cart</h2>
+    <p>Add your coupon code & SAVE upto 70% !</p>
+</section>
+
+<section id="cart" class="section-p1">
+    <table width="100%">
+        <thead>
+            <tr>
+                <td>Remove</td>
+                <td>Image</td>
+                <td>Product</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Subtotal</td>
+            </tr>
+        </thead>
+        <tbody id="cartItems">
+            <tr>
+                <td><a href="#" onclick="removeItem(this)"><i class="far fa-times-circle"></i></a></td>
+                <td><img src="https://res.cloudinary.com/dmrzseo7n/image/upload/v1728745291/MA7E4-removebg-preview_noog5l.png" alt=""></td>
+                <td>I Phone 16 pro max</td>
+                <td class="price">1,29,900</td>
+                <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
+                <td class="subtotal">1,29,900</td>
+            </tr>
+            <tr>
+                <td><a href="#" onclick="removeItem(this)"><i class="far fa-times-circle"></i></a></td>
+                <td><img src="https://res.cloudinary.com/dmrzseo7n/image/upload/v1728739517/images__2_-removebg-preview_w51cgx.png" alt=""></td>
+                <td>Logitech Gaming Mouse</td>
+                <td class="price">9,900</td>
+                <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
+                <td class="subtotal">9,900</td>
+            </tr>
+            <tr>
+                <td><a href="#" onclick="removeItem(this)"><i class="far fa-times-circle"></i></a></td>
+                <td><img src="https://res.cloudinary.com/dmrzseo7n/image/upload/v1728738591/pixelcut-export_5_weiw9a.png" alt=""></td>
+                <td>Apple TV</td>
+                <td class="price">19,900</td>
+                <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
+                <td class="subtotal">19,900</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="cart-add" class="section-p1">
+    <div id="coupon">
+        <h3>Apply Coupon</h3>
+        <div>
+            <input type="text" placeholder="Click to select a coupon" id="couponInput" readonly onclick="showCoupons()">
+            <button class="normal" onclick="applyCoupon()">Apply</button>
+        </div>
+        <div id="couponList" style="display: none; margin-top: 10px;">
+            <h5>Available Coupons:</h5>
+            <ul id="couponItems">
+                <li class="coupon-item" onclick="selectCoupon('SAVE10')"><strong>SAVE10</strong> - 10% off on orders above 100,000</li>
+                <li class="coupon-item" onclick="selectCoupon('FREESHIP')"><strong>FREESHIP</strong> - Free Shipping on orders above 50,000</li>
+                <li class="coupon-item" onclick="selectCoupon('DISCOUNT20')"><strong>DISCOUNT20</strong> - 20,000 off on orders over 200,000</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="subtotal">
+        <h3>Cart Totals</h3>
+        <table>
+            <tr>
+                <td>Cart Subtotal</td>
+                <td id="cartSubtotal">1,59,700</td> <!-- Subtotal based on cart items -->
+            </tr>
+            <tr>
+                <td>Discount</td>
+                <td id="discountAmount">0.00</td> <!-- Discount starts at 0 -->
+            </tr>
+            <tr>
+                <td>Shipping</td>
+                <td>Free</td> <!-- Free shipping by default -->
+            </tr>
+            <tr>
+                <td><strong id="totalPrice">Total</strong></td>
+                <td><strong id="totalAmount">1,59,700</strong></td> <!-- Total before applying discount -->
+            </tr>
+        </table>
+        <button class="normal" onclick="openModal()">Proceed to pay</button>
+    </div>
+</section>
+
+   <!--news-->
+   <section id="newspaper" class="section-p1 section-m1">
+    <div class="newstext">
+        <h4>Sign Up For Newsletters</h4>
+        <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
+    </div>
+    <div class="form" id="registrationForm">
+        <input type="text" placeholder="Your email address" id="email" required>
+        <button class="normal" onclick="signUp()">Sign Up</button>
+    </div>
+</section>
+
+    <!--footer-->
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="https://res.cloudinary.com/dmrzseo7n/image/upload/v1728746287/pixelcut-export_9_puz3uk.png" style="height:5vh;width:8vw;" alt="">
+            <h4>Contact</h4>
+            <p><strong>Address:</strong>Navalur, Kanchipuram, Chennai</p>
+            <p><strong>Phone:</strong>+91 7200380334 /+91 6379645314</p>
+            <p><strong>Hours:</strong>10:00 am - 9:00 pm, Mon - Sat</p>
+            <div class="follow">
+                <h4>Follow us</h4>
+                <div class="icon">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <h4>About</h4>
+            <a href="about.html">About us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy policy</a>
+            <a href="#">Terms & conditions</a>
+            <a href="contact.html">Contact us</a>
+
+        </div>
+
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="login.html">Sign in</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Whishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+
+        </div>
+
+        <div class="col install">
+            <h4>Install App</h4>
+            <p>From App Store or Google Play</p>
+            <div class="row">
+                <img src="img/pay/app.jpg" alt="">
+                <img src="img/pay/play.jpg" alt="">
+            </div>
+            <p>Secure Payment Gateways </p>
+            <img src="img/pay/pay.png" alt="">
+
+        </div>
+        <div>
+            <p>@ 2021, Tech etc-electronic store</p>
+        </div>
+    </footer>
+    
+<!-- Enhanced Payment Gateway Modal -->
+<div id="paymentModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <h2>Complete Your Payment</h2>
+        <div class="payment-methods">
+            <button class="payment-option" onclick="selectPaymentMethod('card')">Credit/Debit Card</button>
+            <button class="payment-option" onclick="selectPaymentMethod('wallet')">Digital Wallet</button>
+            <button class="payment-option" onclick="selectPaymentMethod('netbanking')">Net Banking</button>
+        </div>
+
+        <form id="paymentForm" onsubmit="submitPayment(event)">
+            <!-- Credit/Debit Card Payment Form -->
+            <div id="cardPayment" class="payment-section">
+                <label for="cardName">Cardholder's Name</label>
+                <input type="text" id="cardName" name="cardName" placeholder="Enter cardholder's name" required>
+
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter card number" required>
+
+                <label for="expiryDate">Expiry Date</label>
+                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+
+                <label for="cvv">CVV</label>
+                <input type="password" id="cvv" name="cvv" placeholder="CVV" required>
+            </div>
+
+            <!-- Digital Wallet Payment Form -->
+            <div id="walletPayment" class="payment-section" style="display: none;">
+                <label for="walletType">Choose Wallet</label>
+                <select id="walletType" name="walletType">
+                    <option value="paypal">PayPal</option>
+                    <option value="googlepay">Google Pay</option>
+                    <option value="applepay">Phone Pay</option>
+                </select>
+                <p>Please confirm the payment through your wallet app.</p>
+            </div>
+
+            <!-- Net Banking Payment Form -->
+            <div id="netbankingPayment" class="payment-section" style="display: none;">
+                <label for="bankSelect">Select Your Bank</label>
+                <select id="bankSelect" name="bankSelect">
+                    <option value="bank1">Indian Bank</option>
+                    <option value="bank2">Bank of Baroda</option>
+                    <option value="bank3">Canara Bank</option>
+                </select>
+                <p>You'll be redirected to your bank's secure page to complete the transaction.</p>
+            </div>
+
+            <button type="submit" class="normal">Pay Now</button>
+        </form>
+    </div>
+</div>
+
+<!-- Payment Success Notification -->
+<div id="paymentSuccess" class="notification" style="display: none;">
+    <p>Payment successful! Thank you for your purchase.</p>
+    <button onclick="closeNotification()">OK</button>
+</div>
+
+<script>
+    function selectPaymentMethod(method) {
+        document.querySelectorAll('.payment-section').forEach(section => section.style.display = 'none');
+        document.getElementById(method + 'Payment').style.display = 'block';
+    }
+
+    async function submitPayment(event) {
+        event.preventDefault();
+        const formData = new FormData(document.getElementById('paymentForm'));
+        const response = await fetch('/api/payment', {
+            method: 'POST',
+            body: JSON.stringify(Object.fromEntries(formData)),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const result = await response.json();
+        if (result.success) {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('paymentSuccess').style.display = 'block';
+        } else {
+            alert("Payment failed. Please try again.");
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    function closeNotification() {
+        document.getElementById('paymentSuccess').style.display = 'none';
+    }
+</script>
+
+
+    <!-- Add this script to the cart page -->
+<script>
+   // Load cart items from local storage and display them
+function loadCart() {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsContainer = document.getElementById('cartItems');
+    cartItemsContainer.innerHTML = ''; // Clear existing items
+
+    // Loop through each cart item and create a row in the table
+    cartItems.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><a href="#" onclick="removeItem(this)"><i class="far fa-times-circle"></i></a></td>
+            <td><img src="${item.image}" alt="${item.name}" style="width: 50px; height: auto;"></td> <!-- Product image -->
+            <td>${item.name}</td>
+            <td class="price">${item.price.toLocaleString()}</td>
+            <td><input type="number" value="${item.quantity}" min="1" onchange="updateSubtotal(this)"></td>
+            <td class="subtotal">${(item.price * item.quantity).toLocaleString()}</td>
+        `;
+        cartItemsContainer.appendChild(row);
+    });
+
+    updateCartTotals(); // Update cart totals after loading items
+}
+
+    // Function to update cart totals
+    function updateCartTotals() {
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        let subtotal = 0;
+
+        cartItems.forEach(item => {
+            subtotal += parseInt(item.price) * item.quantity;
+        });
+
+        document.getElementById('cartSubtotal').innerText = subtotal.toLocaleString(); // Format number with commas
+        document.getElementById('totalAmount').innerText = subtotal.toLocaleString(); // Set total amount
+    }
+
+    // Call loadCart on page load
+    window.onload = loadCart;
+</script>
+
+    <!-- Add this script to the cart page for removing cart items-->
+    <script>
+        function removeItem(element) {
+            // Remove the row from the cart
+            var row = element.parentElement.parentElement; // Navigate to the parent row
+            row.parentElement.removeChild(row); // Remove the row from the table
+        
+            // Update the subtotal and total amounts
+            updateCartTotals();
+        }
+        
+        function updateCartTotals() {
+            let subtotal = 0;
+            const items = document.querySelectorAll('#cartItems tr');
+            items.forEach(item => {
+                const price = parseFloat(item.querySelector('.price').innerText.replace(',', ''));
+                const quantity = parseInt(item.querySelector('input[type="number"]').value);
+                subtotal += price * quantity;
+            });
+            document.getElementById('cartSubtotal').innerText = subtotal.toLocaleString(); // Format as currency
+            document.getElementById('totalAmount').innerText = subtotal.toLocaleString(); // Update total amount
+        }
+        
+        </script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="script.js"></script>
+    <script>
+        // Array to store registered emails
+        const registeredEmails = [];
+
+        function signUp() {
+            const emailInput = document.getElementById("email");
+            const email = emailInput.value.trim();
+
+            // Check if email is already registered
+            if (registeredEmails.includes(email)) {
+                alert("This email is already registered.");
+            } else {
+                // Add email to the array
+                registeredEmails.push(email);
+                alert("You have successfully signed up!");
+                emailInput.value = ""; // Clear input
+            }
+        }
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway Modal</title>
+    <style>
+        /* Body & Background */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url("img/banner/b9.jpg");
+            background-size: cover;
+            background-blend-mode: overlay;
+        }
+
+        /* Modal Container */
+        .glass-container {
+            width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.3);
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #444;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Payment Options */
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .payment-methods button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff5722;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        .payment-methods button:hover {
+            background-color: #ff3e00;
+            transform: scale(1.05);
+        }
+
+        /* Form Sections */
+        .payment-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Form & Inputs */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 2px solid #ff5722;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #ff3e00;
+            box-shadow: 0 0 8px rgba(255, 87, 34, 0.4);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            font-size: 16px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff5722;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff3e00;
+            transform: scale(1.05);
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glass-container">
+    <h2>Complete Your Payment</h2>
+    <div class="payment-methods">
+        <button onclick="selectPaymentMethod('card')">Credit/Debit Card</button>
+        <button onclick="selectPaymentMethod('wallet')">Digital Wallet</button>
+        <button onclick="selectPaymentMethod('netbanking')">Net Banking</button>
+    </div>
+
+    <form id="paymentForm" onsubmit="return false;">
+        <!-- Credit/Debit Card Section -->
+        <div id="cardPayment" class="payment-section">
+            <input type="text" id="cardName" placeholder="Cardholder's Name">
+            <input type="text" id="cardNumber" placeholder="Card Number">
+            <input type="text" id="expiryDate" placeholder="Expiry Date (MM/YY)">
+            <input type="password" id="cvv" placeholder="CVV">
+        </div>
+
+        <!-- Digital Wallet Section -->
+        <div id="walletPayment" class="payment-section">
+            <select id="walletType">
+                <option value="">Choose Wallet</option>
+                <option value="paypal">PayPal</option>
+                <option value="googlepay">Google Pay</option>
+                <option value="phonepay">Phone Pay</option>
+            </select>
+            <p>Confirm payment in your wallet app after clicking "Pay Now".</p>
+        </div>
+
+        <!-- Net Banking Section -->
+        <div id="netbankingPayment" class="payment-section">
+            <select id="bankSelect">
+                <option value="">Select Your Bank</option>
+                <option value="indian_bank">Indian Bank</option>
+                <option value="bank_of_baroda">Bank of Baroda</option>
+                <option value="canara_bank">Canara Bank</option>
+            </select>
+            <p>You'll be redirected to your bank's secure page to complete the transaction.</p>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="processPayment()">Pay Now</button>
+    </form>
+</div>
+
+<script>
+    // Function to select and show the payment section
+    function selectPaymentMethod(method) {
+        document.querySelectorAll('.payment-section').forEach(section => section.style.display = 'none');
+        document.getElementById(method + 'Payment').style.display = 'block';
+    }
+
+    // Check for stored payment data and prompt user to use it
+    window.onload = function() {
+        const storedPaymentData = JSON.parse(localStorage.getItem('paymentData'));
+        if (storedPaymentData) {
+            const useStored = confirm("Do you want to use your saved payment details?");
+            if (useStored) {
+                fillPaymentForm(storedPaymentData);
+            }
+        }
+    };
+
+    // Fill form with stored data
+    function fillPaymentForm(data) {
+        if (data.cardName) document.getElementById('cardName').value = data.cardName;
+        if (data.cardNumber) document.getElementById('cardNumber').value = data.cardNumber;
+        if (data.expiryDate) document.getElementById('expiryDate').value = data.expiryDate;
+        if (data.cvv) document.getElementById('cvv').value = data.cvv;
+        if (data.walletType) document.getElementById('walletType').value = data.walletType;
+        if (data.bankSelect) document.getElementById('bankSelect').value = data.bankSelect;
+    }
+
+    // Process payment and save data if user consents
+    function processPayment() {
+        const cardName = document.getElementById('cardName').value;
+        const cardNumber = document.getElementById('cardNumber').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
+        const walletType = document.getElementById('walletType').value;
+        const bankSelect = document.getElementById('bankSelect').value;
+
+        const paymentData = { cardName, cardNumber, expiryDate, cvv, walletType, bankSelect };
+
+        const saveDetails = confirm("Do you want to save these payment details for future use?");
+        if (saveDetails) {
+            localStorage.setItem('paymentData', JSON.stringify(paymentData));
+        }
+
+        alert("Payment Successful!");
+    }
+</script>
+
+</body>
+</html>

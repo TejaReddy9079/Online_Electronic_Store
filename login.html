@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        /* Body & Background */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url("img/banner/b3.jpg");
+            background-size: cover;
+        }
+
+        /* Glass Effect Container */
+        .glass-container {
+            width: 350px;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #ffffff;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Form & Inputs */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input {
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: #ffffffaa;
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .options label,
+        .options a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button */
+        button {
+            font-size: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff5722;
+            color: #ffffff;
+        }
+
+        /* Link to Register */
+        p {
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        p a {
+            color: #ffffff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="glass-container">
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return false;"> <!-- Prevent default form submission -->
+        <input type="text" id="username" name="username" required placeholder="Username">
+        <input type="password" id="password" name="password" required placeholder="Password">
+
+        <div class="options">
+            <label>
+                <input type="checkbox" id="remember" name="remember"> Remember me
+            </label>
+            <a href="#" onclick="forgotPassword()">Forgot Password?</a>
+        </div>
+
+        <a href="index.html"><button type="button" >Login</button></a>
+        <p>Don't have an account? <a href="register.html" onclick="openRegisterForm()">Register</a></p>
+    </form>
+</div>
+
+<!-- Popup for Forgot Password -->
+<div id="forgotPasswordModal" style="display: none;">
+    <h3>Create New Password</h3>
+    <input type="password" id="newPassword" placeholder="New Password">
+    <button onclick="createNewPassword()">Submit</button>
+    <button onclick="closeForgotPasswordModal()">Cancel</button>
+</div>
+
+<script>
+    // Function to handle login
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const remember = document.getElementById('remember').checked;
+
+        // Simulating credential check (replace with real authentication logic)
+        if (username === "admin" && password === "password") { // Replace with your validation logic
+            if (remember) {
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
+            }
+            // Navigate to index.html after successful login
+            window.location.href = 'index.html';
+        } else {
+            alert('Invalid username or password. Please try again.'); // Stay on the same page
+        }
+    }
+
+    // Function to check for saved credentials on page load
+    window.onload = function() {
+        const savedUsername = localStorage.getItem('username');
+        const savedPassword = localStorage.getItem('password');
+
+        if (savedUsername) {
+            const confirmation = confirm("Do you want to use saved credentials?");
+            if (confirmation) {
+                document.getElementById('username').value = savedUsername;
+                document.getElementById('password').value = savedPassword;
+                document.getElementById('remember').checked = true; // Check the remember me box
+            }
+        }
+    }
+
+    // Function to open the Forgot Password modal
+    function forgotPassword() {
+        document.getElementById('forgotPasswordModal').style.display = 'block';
+    }
+
+    // Function to close the Forgot Password modal
+    function closeForgotPasswordModal() {
+        document.getElementById('forgotPasswordModal').style.display = 'none';
+    }
+
+    // Function to create a new password
+    function createNewPassword() {
+        const newPassword = document.getElementById('newPassword').value;
+        // Logic to update the password should go here (e.g., save it to the server or localStorage)
+        // Example: localStorage.setItem('password', newPassword); // Not recommended for production
+        alert('New password created successfully!');
+        closeForgotPasswordModal();
+    }
+
+    // Function to open registration form
+    function openRegisterForm() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Simulating registration logic
+        localStorage.setItem('username', username); // Save the entered username
+        localStorage.setItem('password', password); // Save the entered password
+        alert(' For modification ! Redirecting to register page.');
+    }
+</script>
+</body>
+</html>

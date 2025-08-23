@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-image: url("img/banner/b14.png");
+            background-color: #041e42;
+            background-size: cover;
+        }
+
+        .glass-container {
+            width: 350px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid #fff;
+        }
+
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input::placeholder {
+            color: #fff;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            background: #fff;
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: transparent;
+            color: white;
+            outline: 1px solid #fff;
+        }
+
+        p {
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #login-link {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-container">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" id="username" name="username" required placeholder="Username">
+            <input type="tel" id="phone" name="phone" required placeholder="Phone Number">
+            <input type="email" id="email" name="email" required placeholder="Email">
+            <input type="password" id="password" name="password" required placeholder="Password">
+            <button type="button" onclick="registerUser()">Register</button>
+        </form>
+        <p>Already have an account? <a href="login.html" id="login-link">Login</a></p>
+    </div>
+
+    <script>
+        function registerUser() {
+            const username = document.getElementById("username").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            if (username && phone && email && password) {
+                const user = {
+                    username,
+                    phone,
+                    email,
+                    password
+                };
+
+                // Store user in local storage as a string
+                localStorage.setItem(username, JSON.stringify(user));
+                alert("Registration successful! Redirecting to login page.");
+
+                // Redirect to login page after registration
+                window.location.href = "login.html";
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+    </script>
+</body>
+</html>
